@@ -1,20 +1,27 @@
 # Faculty Appraisal Management System (Agentic AI)
 
-> **Course:** Agentic AI (Comprehensive Labs 1–12 Implementation)  
+**Student Name:** Pratiksha Magadum  
+**USN:** 02FE23BCI045  
+**Course:** Agentic AI (Comprehensive Labs 1–12 Implementation)  
+**Department:** School of Computer Science & Engineering, KLE Technological University, Dr. M. S. Sheshagiri Campus, Belagavi  
+**Academic Year:** 2026–27  
+
 > **Notice:** *This is an educational prototype using synthetic data.*  
 > **Scoring Policy Disclaimer:** *Demo Appraisal Policy — configurable; not official institutional scoring policy.*
 
 ---
 
-## 1. Problem Statement
-Evaluating faculty annual performance across teaching, research, and institutional administration requires processing diverse evidence formats (papers, student feedback forms, committee appointments), validating their authenticity, applying complex evaluation rules, and compiling auditable appraisal dossiers. Manual review is labor-intensive, error-prone, and inconsistent.
+## Executive Summary
 
-## 2. Objective
-Build an autonomous **Multi-Agent AI System** that collects evidence across three faculty domains, validates submissions, calculates a deterministic API appraisal score using configurable rules, and generates human-reviewable appraisal reports, demonstrating the complete set of **12 Core Concepts (Labs 1 through 12)** of the Agentic AI curriculum.
+The Faculty Appraisal Management System is an autonomous multi-agent workbench that automates the preparation of annual faculty appraisal dossiers. It brings together evidence from research, teaching, and institutional administration, using specialized domain agents to collect and validate submissions.
+
+After validation, the system calculates a deterministic score using configurable demo rules and generates PDF and JSON reports for human review. A coordinator manages the workflow, while the SQLite-backed system records appraisal data and execution activity.
+
+The project demonstrates 12 Agentic AI concepts, including tool use, memory, agent collaboration, workflow graphs, deep research, and responsible autonomy. It also provides a Streamlit dashboard, a FastAPI backend, and a CLI runner (`run.py`).
 
 ---
 
-## 3. System Architecture & Complete 12 Core Concepts Mapping
+## 1. System Architecture & Complete 12 Core Concepts Mapping
 
 | Course Lab | Core Concept | Implementation in This Project |
 |---|---|---|
@@ -33,7 +40,7 @@ Build an autonomous **Multi-Agent AI System** that collects evidence across thre
 
 ---
 
-## 4. The Six Domain Agents & Coordinator
+## 2. The Six Domain Agents & Coordinator
 
 ### Domain Agents
 1. **Research Data Collection Agent (`research_agent.py`):** Collects publications, conferences, patents, and funded research grants.
@@ -48,7 +55,7 @@ The **Coordinator (`coordinator.py`)** is orchestration infrastructure (not coun
 
 ---
 
-## 5. Technology Stack
+## 3. Technology Stack
 
 - **Language:** Python 3.10+
 - **Agent Runtime:** OpenCLA/OpenClaw-style registry architecture
@@ -58,74 +65,11 @@ The **Coordinator (`coordinator.py`)** is orchestration infrastructure (not coun
 - **Persistence & Audit:** SQLite (normalized relational schema & key-value memory)
 - **Document Generation:** `fpdf2` (PDF) and Python `json`
 - **Data Parsing:** `pandas` and standard `csv`
-- **Test Framework:** `pytest`
+- **Test Framework:** `pytest` (31 tests)
 
 ---
 
-## 6. Project Directory Structure
-
-```text
-faculty-appraisal-agentic-ai/
-├── app/
-│   ├── agents/               # 6 Domain Agents + BaseAgent + Coordinator
-│   │   ├── base_agent.py
-│   │   ├── research_agent.py
-│   │   ├── teaching_agent.py
-│   │   ├── administration_agent.py
-│   │   ├── validation_agent.py
-│   │   ├── api_calculation_agent.py
-│   │   ├── report_agent.py
-│   │   └── coordinator.py
-│   ├── tools/                # Reusable Tools (Files, DB, Calc, Report)
-│   │   ├── file_tools.py
-│   │   ├── database_tools.py
-│   │   ├── calculation_tools.py
-│   │   └── report_tools.py
-│   ├── skills/               # Reusable Skills with SKILL.md specs
-│   │   ├── base_skill.py
-│   │   ├── research_appraisal/
-│   │   ├── teaching_appraisal/
-│   │   ├── administration_appraisal/
-│   │   ├── evidence_validation/
-│   │   ├── api_calculation/
-│   │   └── report_generation/
-│   ├── runtime/              # OpenCLA/OpenClaw Runtime Engine
-│   │   ├── runtime.py
-│   │   ├── skill_registry.py
-│   │   ├── tool_registry.py
-│   │   ├── memory.py
-│   │   └── audit.py
-│   ├── mcp/                  # MCP-Style Server & Client
-│   │   ├── server.py
-│   │   ├── client.py
-│   │   ├── capabilities.py
-│   │   └── security.py
-│   ├── database/             # SQLite database layer & seed script
-│   │   ├── schema.sql
-│   │   ├── database.py
-│   │   └── seed.py
-│   └── api/                  # FastAPI REST endpoints
-│       └── main.py
-├── dashboard/                # Streamlit UI
-│   └── streamlit_app.py
-├── config/                   # Configurable Scoring Rules
-│   └── scoring_rules.json
-├── data/faculty/             # Synthetic faculty data (FAC001)
-├── reports/                  # Generated PDF and JSON reports
-├── tests/                    # Pytest automated test suite (24 tests)
-├── docs/                     # Lab documentation & demo scripts
-│   ├── architecture.md
-│   ├── lab1.md to lab6.md
-│   ├── demo-script.md
-│   └── viva.md
-├── requirements.txt
-├── README.md
-└── run.py                    # Unified CLI launcher
-```
-
----
-
-## 7. Installation & Quickstart
+## 4. Installation & Quickstart
 
 ### 1. Install Dependencies
 ```bash
@@ -143,7 +87,7 @@ python run.py dashboard
 ```
 *Access the interactive interface at `http://localhost:8501`.*
 
-### 4. Optional: Run FastAPI Backend
+### 4. Run FastAPI Backend
 ```bash
 python run.py api
 ```
@@ -151,46 +95,36 @@ python run.py api
 
 ---
 
-## 8. Running the Automated Test Suite
+## 5. Running Concept Demonstrations & Tests
 
-Run all 24 unit and integration tests:
 ```bash
+# Run pytest automated test suite (31 tests across Labs 1-12)
 python run.py test
-```
-*Or directly via pytest:*
-```bash
-python -m pytest -v
-```
 
-All 24 tests validate:
-- Lab 2 Tool execution & permission rejection
-- Lab 4 Scoped memory isolation (no cross-faculty leakage)
-- Lab 5 MCP manifest discovery, SELECT-only queries, path traversal rejection, unauthorized caller rejection
-- Lab 6 OpenCLA runtime execution, audit logging, and **dynamic skill registration without modifying runtime core**
-- Deterministic scoring bounds and cap verification
-- Full end-to-end multi-agent pipeline orchestration.
+# Demo Lab 7: Agentic Node Graph
+python run.py graph
+
+# Demo Lab 8: Swarm Consensus Resolution
+python run.py swarm
+
+# Demo Lab 9: Deep Research & Citation Truth Table
+python run.py research
+
+# Demo Lab 10: Cloud Operations Agent & Telemetry
+python run.py cloud
+
+# Demo Lab 11: Agentic SDLC Delivery Factory
+python run.py sdlc
+
+# Demo Lab 12: Responsible Autonomy & Audit Hash Chain
+python run.py governance
+```
 
 ---
 
-## 9. Interactive Dashboard Features
+## 6. Contributors
 
-The Streamlit dashboard includes 12 purpose-built views:
-1. **Dashboard:** Profile overview for Dr. Ananya Rao (`FAC001`), one-click **RUN APPRAISAL PIPELINE**, and executive score summary metrics.
-2. **Evidence:** Filterable inventory of collected items with status badges (`VALID`, `INVALID`, `NEEDS REVIEW`) and validation explanations.
-3. **Agent Trace:** Live multi-agent execution pipeline trace, individual agent reasoning loops (`PLAN ➔ ACT ➔ OBSERVE ➔ DECIDE`), and persistent SQLite `audit_logs`.
-4. **Score Breakdown:** Complete transparent arithmetic breakdown for Research (40), Teaching (40), and Administration (20).
-5. **Report & Human Review:** Download generated PDF/JSON appraisal dossiers and perform Human-in-the-Loop **Approve Draft** actions.
-6. **Lab 5 MCP Inspector:** Interactive viva tool to test server capability discovery, valid SELECT queries, and adversarial SQL / path traversal rejections.
-7. **Lab 7 Node Graph:** Live compiled Mermaid DAG visualization, step-by-step state machine execution, and checkpointed Human Review Gate.
-8. **Lab 8 Swarm Consensus:** 4-peer decentralized collaboration, independent proposals, cross-critique message board, and consensus conflict resolution.
-9. **Lab 9 Deep Research:** 5-phase research loop, citation inflation check, Scopus/WoS Q1 verification, and Research Integrity Quotient.
-10. **Lab 10 Cloud Operations:** Live telemetry probe (latency, storage, error rate), root-cause diagnostics, and approval-gated self-healing remediation.
-11. **Lab 11 Agentic SDLC:** Policy requirement intake, automatic code diff & test synthesis, verification test runner, and lead architect sign-off gate.
-12. **Lab 12 Responsible Autonomy:** SHA-256 rolling hash chain verification, point-in-time state rollback, EEOC Four-Fifths fairness benchmark, and PII masking.
-
----
-
-## 10. Scope & Academic Notice
-- **Implemented Scope:** Complete Labs 1 through 12 implemented, tested with 31 unit/integration tests, and accessible via CLI and Streamlit dashboard.
-- **Synthetic Data:** Fictional faculty records only for demonstration.
-- **Demo Scoring:** The formulas in `config/scoring_rules.json` demonstrate configurable weights and do not claim to reflect official university appraisal regulations.
+- **Pratiksha Magadum** (USN: `02FE23BCI045`)  
+- **Department of Computer Science and Engineering**  
+- **KLE Technological University, Dr. M. S. Sheshagiri Campus, Belagavi**  
+- **Academic Year:** 2026–27
